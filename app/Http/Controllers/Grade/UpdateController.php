@@ -12,25 +12,18 @@ class UpdateController extends Controller
     public function __invoke(Request $request, Student $student, $grade)
     {
         $request->validate([
-            'grade'    => 'required|integer',
-            'term'     => 'required|integer',
-            'japanese' => 'nullable|integer|min:0|max:100',
-            'math'     => 'nullable|integer|min:0|max:100',
-            'english'  => 'nullable|integer|min:0|max:100',
+            'grade'    => 'required',
+            'term'     => 'required',
+            'japanese' => 'required|integer',
         ]);
 
-        DB::table('school_grades')
-            ->where('id', $grade)
-            ->update([
-                'grade'      => $request->grade,
-                'term'       => $request->term,
-                'japanese'   => $request->japanese,
-                'math'       => $request->math,
-                'english'    => $request->english,
-                'updated_at' => now(),
-            ]);
+        $gradeData = SchoolGrade::findOrFail($grade);
+        $gradeData->update([
+            'grade'    => $request->grade,
+            'term'     => $request->term,
+            'japanese' => $request->japanese,
+        ]);
 
-        // ★ 編集後は自画面へ戻る
         return redirect("/students/{$student->id}/grades/{$grade}/edit")
             ->with('success', '成績を更新しました');
     }

@@ -4,15 +4,14 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Student;
-use App\GradeMaster;
 
-
-class IndexController extends Controller
+class AjaxController extends Controller
 {
     public function __invoke(Request $request)
     {
+        $sort = $request->get('sort') === 'desc' ? 'desc' : 'asc';
+
         $query = Student::query();
 
         if ($request->filled('name')) {
@@ -23,14 +22,12 @@ class IndexController extends Controller
             $query->where('grade', $request->grade);
         }
 
-        $students = $query->orderBy('id', 'desc')->paginate(10);
+        if ($request->filled('sort')) {
+            $query->orderBy('grade', $sort);
+        } else {
+            $query->orderBy('id', 'desc');
+        }
 
-        $grades = GradeMaster::orderBy('id')->get();
-
-
-        return view('students.index', [
-            'students' => $students,
-            'grades'   => $grades,
-        ]);
+        return $query->get();
     }
 }

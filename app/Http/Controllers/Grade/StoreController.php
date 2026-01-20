@@ -19,18 +19,13 @@ class StoreController extends Controller
             'english'  => 'nullable|integer|min:0|max:100',
         ]);
 
-        DB::table('school_grades')->insert([
-            'student_id' => $student->id,
+        SchoolGrade::create([
+            'student_id' => $student,
             'grade'      => $request->grade,
             'term'       => $request->term,
             'japanese'   => $request->japanese,
-            'math'       => $request->math,
-            'english'    => $request->english,
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
-
-        // ★ 自画面へリダイレクト（課題仕様）
+        
         return redirect("/students/{$student->id}/grades/create")
             ->with('success', '成績を登録しました');
     }
