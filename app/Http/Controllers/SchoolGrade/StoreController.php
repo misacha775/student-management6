@@ -4,7 +4,7 @@ namespace App\Http\Controllers\SchoolGrade;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\GradeMaster;
 
 class StoreController extends Controller
 {
@@ -14,13 +14,10 @@ class StoreController extends Controller
             'name' => 'required|string|max:50',
         ]);
 
-        DB::table('grade_masters')->insert([
+        GradeMaster::create([
             'name' => $request->name,
-            'created_at' => now(),
-            'updated_at' => now(),
-            ]);
-
-
+        ]);
+        
         return redirect('/school-grades')->with('success', '学年を追加しました');
     }
 }
