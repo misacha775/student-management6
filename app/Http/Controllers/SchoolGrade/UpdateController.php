@@ -4,7 +4,7 @@ namespace App\Http\Controllers\SchoolGrade;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\GradeMaster;
 
 class UpdateController extends Controller
 {
@@ -14,13 +14,10 @@ class UpdateController extends Controller
             'name' => 'required|string|max:50',
         ]);
 
-        DB::table('grade_masters')
-            ->where('id', $grade)
-            ->update([
-                'name' => $request->name,
-                'updated_at' => now(),
-            ]);
-
+        $gradeMaster = GradeMaster::findOrFail($grade);
+        $gradeMaster->update([
+            'name' => $request->name,
+        ]);
 
         return redirect('/school-grades')->with('success', '学年を更新しました');
     }
