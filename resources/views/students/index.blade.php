@@ -1,9 +1,13 @@
 <h1>学生リスト</h1>
 
-<form method="GET" action="/students">
-  <input type="text" name="name" placeholder="学生名で検索" value="{{ request('name') }}">
+<button id="sort-asc">学年 昇順</button>
+<button id="sort-desc">学年 降順</button>
 
-  <select name="grade">
+
+<form method="GET" action="/students">
+  <input type="text" name="name"  id="name" placeholder="学生名で検索" value="{{ request('name') }}">
+
+  <select name="grade" id ="grade">
     <option value="">学年を選択</option>
     @foreach ($grades as $g)
       <option value="{{ $g->id }}" {{ (string)request('grade') === (string)$g->id ? 'selected' : '' }}>
@@ -39,7 +43,7 @@
         <th>操作</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="student-list">
       @foreach ($students as $student)
         <tr>
           <td>{{ $student->id }}</td>
@@ -56,4 +60,72 @@
   </table>
 @endif
 {{ $students->appends(request()->query())->links() }}
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<
+<script>
+$(function () {
+
+  let currentSort = ''; // '', 'asc', 'desc'
+
+  function fetchStudents(sort) {
+    if (sort !== undefined) {
+      currentSort = sort;
+    }
+
+    $.ajax({
+      url: '/students/ajax',
+      type: 'GET',
+      data: {
+        sort: currentSort,
+        name: $('#name').val(),
+        grade: $('#grade').val()
+      },
+      dataType: 'json'
+    })
+    .done(function (data) {
+      let html = '';
+
+      data.forEach(function (s) {
+        html += `
+          <tr>
+            <td>${s.id}</td>
+            <td>${s.student_number ?? ''}</td>
+            <td>${s.name}</td>
+            <td>${s.grade}</td>
+            <td>
+              <a href="/students/${s.id}">詳細</a>
+              <a href="/students/${s.id}/edit">編集</a>
+            </td>
+          </tr>
+        `;
+      });
+
+      $('#student-list').html(html);
+    })
+    .fail(function (xhr) {
+      console.log('Ajax失敗', xhr.status, xhr.responseText);
+    });
+  }
+
+  
+  $('#sort-asc').on('click', function () {
+    fetchStudents('asc');
+  });
+
+  $('#sort-desc').on('click', function () {
+    fetchStudents('desc');
+  });
+
+  
+  $('#name').on('keyup', function () {
+    fetchStudents(); 
+
+  $('#grade').on('change', function () {
+    fetchStudents();
+  });
+
+});
+</script>
 

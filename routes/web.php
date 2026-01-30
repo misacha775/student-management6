@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/students/ajax', 'Student\AjaxController');
+
+Route::get('/students/{student}/grades/ajax', 'Grade\AjaxController');
+
+
 Route::get('/', function () {
     return auth()->check() ? redirect('/menu') : redirect('/login');
 });
