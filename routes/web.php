@@ -14,26 +14,19 @@ Route::get('/', function () {
 });
 
 
-// ログイン後の遷移先
+
 Route::get('/home', 'HomeController@index')->name('home');
 
-/**
- * ログイン必須
- */
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/menu', 'MenuController');
 
-    /**
-     * 学年マスタ
-     */
+   
     Route::get('/school-grades', 'SchoolGrade\IndexController');
     Route::post('/school-grades', 'SchoolGrade\StoreController');
     Route::patch('/school-grades/{grade}', 'SchoolGrade\UpdateController');
 
-    /**
-     * 学生
-     */
     Route::get('/students', 'Student\IndexController');
     Route::get('/students/create', 'Student\CreateController');
     Route::post('/students', 'Student\StoreController');
@@ -43,9 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/students/{student}', 'Student\UpdateController');
     Route::delete('/students/{student}', 'Student\DestroyController');
 
-    /**
-     * 成績（学生に紐づく）
-     */
+    
+ 
     Route::get('/students/{student}/grades/create', 'Grade\CreateController');
     Route::post('/students/{student}/grades', 'Grade\StoreController');
 

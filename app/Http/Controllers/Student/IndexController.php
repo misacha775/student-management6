@@ -23,7 +23,7 @@ class IndexController extends Controller
             $query->where('grade', $request->grade);
         }
 
-        $students = $query->orderBy('id', 'desc')->paginate(10);
+        $students = $query->with('schoolGrades')->orderBy('id', 'desc')->paginate(10);
 
         $grades = GradeMaster::orderBy('id')->get();
 

@@ -1,3 +1,13 @@
+@if ($errors->any())
+  <ul style="color:red;">
+    @foreach ($errors->all() as $e)
+      <li>{{ $e }}</li>
+    @endforeach
+  </ul>
+@endif
+
+
+
 <h1>成績登録</h1>
 
 <p>
@@ -41,9 +51,43 @@
     <input type="number" name="english" min="0" max="100">
   </p>
 
+  <p>
+  理科：<br>
+  <input type="number" name="science" min="0" max="100">
+</p>
+
+<p>
+  社会：<br>
+  <input type="number" name="social_studies" min="0" max="100">
+</p>
+
+<p>
+  音楽：<br>
+  <input type="number" name="music" min="0" max="100">
+</p>
+
+<p>
+  家庭科：<br>
+  <input type="number" name="home_economics" min="0" max="100">
+</p>
+
+<p>
+  美術：<br>
+  <input type="number" name="art" min="0" max="100">
+</p>
+
+<p>
+  保健体育：<br>
+  <input type="number" name="health_and_physical_education" min="0" max="100">
+</p>
+
+
   <button type="submit">登録</button>
 </form>
 
 <p>
-  <a href="/students/{{ $student->id }}">学生詳細へ戻る</a>
+ <a href="/students/{{ $student->id }}" class="btn btn-secondary">
+  戻る
+</a>
+
 </p>

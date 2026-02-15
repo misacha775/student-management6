@@ -1,36 +1,24 @@
 <h1>学生登録</h1>
 
-<form method="POST" action="/students">
+<form method="POST" action="/students" enctype="multipart/form-data">
     @csrf
 
     <p>
-        学生番号：<br>
-        <input type="text" name="student_number">
-    </p>
-
-    <p>
         名前：<br>
-        <input type="text" name="name">
-    </p>
-
-    <p>
-        学年：<br>
-        <input type="text" name="grade">
+        <input type="text" name="name" required>
     </p>
 
     <p>
         住所：<br>
-        <input type="text" name="address">
+        <input type="text" name="address" required>
     </p>
 
     <p>
-        コメント：<br>
-        <textarea name="comment"></textarea>
+        顔写真：<br>
+        <input type="file" name="photo" accept="image/*">
     </p>
 
-    <button type="submit">登録</button>
-</form>
+    <button type="submit" class="btn btn-secondary">登録</button>
 
-<p>
-  <a href="/students">一覧へ戻る</a>
-</p>
+    <a href="{{ url()->previous() }}" class="btn btn-secondary">戻る</a>
+</form>

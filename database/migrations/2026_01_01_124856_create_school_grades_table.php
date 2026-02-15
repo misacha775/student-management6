@@ -16,9 +16,9 @@ class CreateSchoolGradesTable extends Migration
     Schema::create('school_grades', function (Blueprint $table) {
         $table->bigIncrements('id');
 
-        $table->unsignedBigInteger('student_id'); // FK
-        $table->integer('grade');                  // 学年
-        $table->integer('term');                   // 学期など（1,2,3）
+        $table->unsignedBigInteger('student_id'); 
+        $table->integer('grade');                 
+        $table->integer('term');                   
 
         $table->integer('japanese')->nullable();
         $table->integer('math')->nullable();
@@ -32,7 +32,7 @@ class CreateSchoolGradesTable extends Migration
 
         $table->timestamps();
 
-        // ★ER図の線を作る本体（外部キー制約）
+       
         $table->foreign('student_id')
             ->references('id')->on('students')
             ->onDelete('cascade');

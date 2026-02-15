@@ -18,33 +18,50 @@
     @method('PATCH')
 
     <p>
-        学生番号：<br>
-        <input type="text" name="student_number" value="{{ $student->student_number }}">
+        学生id：{{ $student->student_number }}
     </p>
+
+    <p>
+      学年：<br>
+      <select name="grade">
+      @for ($i = 1; $i <= 6; $i++)
+        <option value="{{ $i }}"
+          {{ (string)$student->grade === (string)$i ? 'selected' : '' }}>
+         {{ $i }}年
+        </option>
+    @endfor
+  </select>
+</p>
+
 
     <p>
         名前：<br>
         <input type="text" name="name" value="{{ $student->name }}">
     </p>
 
-    <p>
-        学年：<br>
-        <input type="text" name="grade" value="{{ $student->grade }}">
-    </p>
+
 
     <p>
         住所：<br>
         <input type="text" name="address" value="{{ $student->address }}">
     </p>
 
+
+    <p>
+        顔写真：<br>
+        <input type="file" name="photo">
+    </p>
+
+
     <p>
         コメント：<br>
         <textarea name="comment">{{ $student->comment }}</textarea>
     </p>
 
-    <button type="submit">更新</button>
+    <button type="submit">編集</button>
 </form>
 
-<p>
-  <a href="/students/{{ $student->id }}">詳細へ戻る</a>
-</p>
+<a href="/students/{{ $student->id }}" class="btn btn-secondary">
+  戻る
+</a>
+

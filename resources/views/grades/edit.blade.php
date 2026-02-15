@@ -1,10 +1,5 @@
 <h1>成績編集</h1>
 
-<p>
-  学生番号：{{ $student->student_number }}<br>
-  名前：{{ $student->name }}
-</p>
-
 <form method="POST" action="/students/{{ $student->id }}/grades/{{ $grade->id }}">
   @csrf
   @method('PATCH')
@@ -44,9 +39,48 @@
     <input type="number" name="english" value="{{ $grade->english }}" min="0" max="100">
   </p>
 
+  <p>
+  理科：<br>
+  <input type="number" name="science"
+         value="{{ $grade->science }}" min="0" max="100">
+</p>
+
+<p>
+  社会：<br>
+  <input type="number" name="social_studies"
+         value="{{ $grade->social_studies }}" min="0" max="100">
+</p>
+
+<p>
+  音楽：<br>
+  <input type="number" name="music"
+         value="{{ $grade->music }}" min="0" max="100">
+</p>
+
+<p>
+  家庭科：<br>
+  <input type="number" name="home_economics"
+         value="{{ $grade->home_economics }}" min="0" max="100">
+</p>
+
+<p>
+  美術：<br>
+  <input type="number" name="art"
+         value="{{ $grade->art }}" min="0" max="100">
+</p>
+
+<p>
+  保健体育：<br>
+  <input type="number" name="health_and_physical_education"
+         value="{{ $grade->health_and_physical_education }}" min="0" max="100">
+</p>
+
+
   <button type="submit">更新</button>
 </form>
 
-<p>
-  <a href="/students/{{ $student->id }}">学生詳細へ戻る</a>
-</p>
+
+  <a href="/students/{{ $student->id }}" class="btn btn-secondary">
+  戻る
+</a>
+

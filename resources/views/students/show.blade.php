@@ -1,29 +1,29 @@
 <h1>学生詳細</h1>
-
-<p>ID：{{ $student->id }}</p>
-<p>学生番号：{{ $student->student_number }}</p>
+<h2>学生表示</h2>
 <p>名前：{{ $student->name }}</p>
 <p>学年：{{ $student->grade }}</p>
 <p>住所：{{ $student->address }}</p>
+
+@if($student->img_path)
+  <p>
+    顔写真：<br>
+    <img src="{{ asset('storage/'.$student->img_path) }}" width="150">
+  </p>
+@endif
+
 <p>コメント：{{ $student->comment }}</p>
 
+
+
 <p>
-  <a href="/students">一覧へ</a>
-  <a href="/students/{{ $student->id }}/edit">編集へ</a>
-  <a href="/students/{{ $student->id }}/grades/create">成績を登録</a>
+  <a href="/students/{{ $student->id }}/edit" class="btn btn-secondary">学生編集</a>
 </p>
 
-<form method="POST" action="/students/{{ $student->id }}" onsubmit="return confirm('削除しますか？')">
-  @csrf
-  @method('DELETE')
-  <button type="submit">削除</button>
-</form>
 
 <hr>
 
-<h2>成績</h2>
+<h2>成績表示</h2>
 
-<h3>成績検索</h3>
 
 <p>
   学年：
@@ -66,32 +66,50 @@
 </form>
 
 <hr>
+<a href="{{ url()->previous() }}" class="btn btn-secondary">
+  戻る
+</a>
 
 
 @if ($grades->isEmpty())
   <p>成績はまだありません。</p>
 @else
-  <ul>
+
+
+
+
   <ul id="grade-list">
     @foreach ($grades as $g)
       <li>
-        成績ID: {{ $g->id }}
-        / 学年: {{ $g->grade }}
-        / 学期: {{ $g->term }}
-        / 国語: {{ $g->japanese }}
-        <a href="/students/{{ $student->id }}/grades/{{ $g->id }}/edit">編集</a>
-        <form method="POST"
-              action="/students/{{ $student->id }}/grades/{{ $g->id }}"
-              onsubmit="return confirm('この成績を削除しますか？')"
-              style="display:inline;">
-          @csrf
-          @method('DELETE')
-          <button type="submit">削除</button>
-        </form>
+        学年: {{ $g->grade }} / 学期: {{ $g->term }}<br>
+        国語: {{ $g->japanese }}
+        数学: {{ $g->math }}
+        理科: {{ $g->science }}
+        社会: {{ $g->social_studies }}
+        音楽: {{ $g->music }}
+        家庭科: {{ $g->home_economics }}
+        英語: {{ $g->english }}
+        美術: {{ $g->art }}
+        保健体育: {{ $g->health_and_physical_education }}
+        <br>
+        <a href="/students/{{ $student->id }}/grades/{{ $g->id }}/edit">
+           成績編集
+        </a>
       </li>
+
+ 
     @endforeach
   </ul>
 @endif
+
+<p style="margin-top:15px;">
+  <a href="/students/{{ $student->id }}/grades/create"
+     class="btn btn-secondary">
+     成績登録(追加)
+  </a>
+</p>
+
+
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
@@ -114,17 +132,27 @@ $(function () {
       if (data.length === 0) {
         html = '<li>該当する成績がありません。</li>';
       } else {
-        data.forEach(function (g) {
-          html += `
-            <li>
-              成績ID: ${g.id}
-              / 学年: ${g.grade}
-              / 学期: ${g.term}
-              / 国語: ${g.japanese}
-              <a href="/students/{{ $student->id }}/grades/${g.id}/edit">編集</a>
-            </li>
-          `;
-        });
+       data.forEach(function (g) {
+  html += `
+<li>
+  学年: ${g.grade} / 学期: ${g.term}<br>
+  国語: ${g.japanese}
+  数学: ${g.math}
+  理科: ${g.science}
+  社会: ${g.social_studies}
+  音楽: ${g.music}
+  家庭科: ${g.home_economics}
+  英語: ${g.english}
+  美術: ${g.art}
+  保健体育: ${g.health_and_physical_education}
+  <br>
+  <a href="/students/{{ $student->id }}/grades/${g.id}/edit">
+    成績編集
+  </a>
+</li>
+`;
+});
+
       }
 
       $('#grade-list').html(html);
