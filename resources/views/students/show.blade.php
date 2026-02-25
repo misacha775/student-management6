@@ -1,3 +1,7 @@
+@extends('layouts.app')
+
+@section('content')
+
 <h1>学生詳細</h1>
 <h2>学生表示</h2>
 <p>名前：{{ $student->name }}</p>
@@ -90,9 +94,9 @@
         美術: {{ $g->art }}
         保健体育: {{ $g->health_and_physical_education }}
         <br>
-        <a href="/students/{{ $student->id }}/grades/{{ $g->id }}/edit">
-           成績編集
-        </a>
+        <a href="/students/{{ $student->id }}/grades/{{ $g->id }}/edit" class="btn btn-primary">
+    成績編集
+</a>
       </li>
 
  
@@ -179,3 +183,5 @@ $(function () {
 <a href="/students" class="btn btn-secondary">
   戻る
 </a>
+
+@endsection

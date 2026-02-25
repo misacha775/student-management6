@@ -1,3 +1,7 @@
+@extends('layouts.app')
+
+@section('content')
+
 <h1>成績編集</h1>
 
 <form method="POST" action="/students/{{ $student->id }}/grades/{{ $grade->id }}">
@@ -84,3 +88,4 @@
   戻る
 </a>
 
+@endsection

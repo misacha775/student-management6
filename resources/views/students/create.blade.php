@@ -1,3 +1,7 @@
+@extends('layouts.app')
+
+@section('content')
+
 <h1>学生登録</h1>
 
 <form method="POST" action="/students" enctype="multipart/form-data">
@@ -32,3 +36,5 @@
 
     <a href="{{ url()->previous() }}" class="btn btn-secondary">戻る</a>
 </form>
+
+@endsection

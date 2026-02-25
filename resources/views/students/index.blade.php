@@ -111,21 +111,24 @@ $(function () {
 
 <hr>
 
+<form method="GET" action="/students" class="d-flex gap-2 align-items-center">
+    
+    <input type="text" name="name" id="name" placeholder="学生名で検索"
+           value="{{ request('name') }}" class="form-control">
 
-<form method="GET" action="/students">
-  <input type="text" name="name"  id="name" placeholder="学生名で検索" value="{{ request('name') }}">
-
-  <select name="grade" id ="grade">
-    <option value="">学年を選択</option>
+   <select name="grade" id="grade" class="form-select">
+    <option value="" disabled {{ request('grade') ? '' : 'selected' }}>学年を選択</option>
     @foreach ($grades as $g)
-      <option value="{{ $g->id }}" {{ (string)request('grade') === (string)$g->id ? 'selected' : '' }}>
-        {{ $g->name ?? ($g->id . '年') }}
-      </option>
+        <option value="{{ $g->id }}" {{ (string)request('grade') === (string)$g->id ? 'selected' : '' }}>
+            {{ !empty($g->name) ? $g->name : $g->id . '年' }}
+        </option>
     @endforeach
-  </select>
+   </select>
+    
 
-  <button type="submit">検索</button>
-  <a href="/students">クリア</a>
+   
+    <button type="submit" class="btn btn-primary">検索</button>
+    <a href="/students" class="btn btn-secondary">クリア</a>
 </form>
 
 

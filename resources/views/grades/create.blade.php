@@ -1,3 +1,7 @@
+@extends('layouts.app')
+
+@section('content')
+
 @if ($errors->any())
   <ul style="color:red;">
     @foreach ($errors->all() as $e)
@@ -91,3 +95,5 @@
 </a>
 
 </p>
+
+@endsection

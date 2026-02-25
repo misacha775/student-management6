@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 
 @if (session('success'))
   <p style="color:green;">{{ session('success') }}</p>
@@ -67,3 +70,4 @@
   戻る
 </a>
 
+@endsection
