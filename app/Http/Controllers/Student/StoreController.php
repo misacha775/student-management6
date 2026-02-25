@@ -17,11 +17,12 @@ class StoreController extends Controller
             $path = $request->file('photo')->store('students', 'public');
         }
 
-        Student::create([
-            'name'     => $request->name,
-            'address'  => $request->address,
-            'img_path' => $path,
-        ]);
+      Student::create([
+    'name'     => $request->name,
+    'grade'    => $request->grade, 
+    'address'  => $request->address,
+    'img_path' => $path,
+]);
 
         // 
         return redirect('/menu');

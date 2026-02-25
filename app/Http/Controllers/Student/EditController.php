@@ -7,12 +7,8 @@ use App\Student;
 
 class EditController extends Controller
 {
-    public function __invoke($student)
-    {
-        $student = Student::findOrFail($student);
-
-        return view('students.edit', [
-            'student' => $student,
-        ]);
-    }
+    public function __invoke(Student $student)
+{
+    return view('students.edit', compact('student'));
+}
 }

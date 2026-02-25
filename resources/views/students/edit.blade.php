@@ -1,3 +1,4 @@
+
 @if (session('success'))
   <p style="color:green;">{{ session('success') }}</p>
 @endif
@@ -13,7 +14,8 @@
 
 <h1>学生編集</h1>
 
-<form method="POST" action="/students/{{ $student->id }}">
+<form method="POST" action="/students/{{ $student->id }}" enctype="multipart/form-data">
+
     @csrf
     @method('PATCH')
 

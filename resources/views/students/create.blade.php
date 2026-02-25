@@ -4,6 +4,16 @@
     @csrf
 
     <p>
+      学年：<br>
+       <select name="grade" required>
+       <option value="">選択してください</option>
+       @for ($i = 1; $i <= 6; $i++)
+       <option value="{{ $i }}">{{ $i }}年</option>
+       @endfor
+       </select>
+    </p>
+
+    <p>
         名前：<br>
         <input type="text" name="name" required>
     </p>

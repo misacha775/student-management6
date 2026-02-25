@@ -9,19 +9,20 @@
 
   <div class="d-flex flex-column align-items-center gap-3">
 
-    <a href="/school-grades" class="btn btn-lg w-50 simple-btn">
-      学年更新
-    </a>
+ <form action="/students/promote" method="POST" class="w-50">
+  @csrf
+  <button type="submit" class="btn btn-lg w-100 simple-btn">
+    学年更新
+  </button>
+</form>
 
-    <a href="/students/create" class="btn btn-lg w-50 simple-btn">
-      学生登録
-    </a>
+  <a href="/students/create" class="btn btn-lg w-50 simple-btn">
+    学生登録
+  </a>
 
-    <a href="/students" class="btn btn-lg w-50 simple-btn">
-      学生表示
-    </a>
-
-  </div>
+  <a href="/students" class="btn btn-lg w-50 simple-btn">
+    学生表示
+  </a>
 
 </div>
 

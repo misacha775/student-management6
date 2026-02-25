@@ -14,10 +14,10 @@ class CreateStudentsTable extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->bigIncrements('id');      // 主キー
-            $table->string('student_number'); // 学籍番号
-            $table->string('name');           // 氏名
-            $table->integer('grade');          // 学年
+            $table->bigIncrements('id');      
+            $table->string('student_number')->nullable();
+            $table->string('name');           
+            $table->integer('grade');        
             $table->timestamps();              // created_at / updated_at
 
     });

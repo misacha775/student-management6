@@ -66,9 +66,7 @@
 </form>
 
 <hr>
-<a href="{{ url()->previous() }}" class="btn btn-secondary">
-  戻る
-</a>
+
 
 
 @if ($grades->isEmpty())
@@ -163,8 +161,21 @@ $(function () {
     });
   }
 
-  // 学年・学期を変えたら検索
+ 
   $('#filter-grade, #filter-term').on('change', fetchGrades);
 
 });
 </script>
+
+<form method="POST" action="/students/{{ $student->id }}" onsubmit="return confirm('削除しますか？');">
+    @csrf
+    @method('DELETE')
+
+    <button type="submit" class="btn btn-danger">
+        削除
+    </button>
+</form>
+
+<a href="/students" class="btn btn-secondary">
+  戻る
+</a>
