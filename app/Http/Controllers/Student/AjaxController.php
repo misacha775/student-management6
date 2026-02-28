@@ -11,6 +11,7 @@ class AjaxController extends Controller
     public function __invoke(Request $request)
     {
         $sort = $request->get('sort') === 'desc' ? 'desc' : 'asc';
+        $sortBy = $request->input('sort_by', 'grade');
 
         $query = Student::query();
 
@@ -23,11 +24,11 @@ class AjaxController extends Controller
         }
 
         if ($request->filled('sort')) {
-            $query->orderBy('grade', $sort);
+            $query->orderBy($sortBy, $sort);
         } else {
             $query->orderBy('id', 'desc');
         }
 
-        return $query->get();
+        return response()->json($query->get());
     }
 }

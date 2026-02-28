@@ -1,5 +1,8 @@
 <h1>学生表示</h1>
 
+<button id="sort-grade-asc">学年昇順</button>
+<button id="sort-grade-desc">学年降順</button>
+
 @if ($students->count() === 0)
   <p>学生がまだ登録されていません。</p>
 @else
@@ -15,7 +18,7 @@
 <tbody id="student-list">
 @foreach ($students as $student)
   <tr>
-    <td>{{ $student->grade }}</td>
+    <td>{{ $student->grade }}年</td>
     <td>{{ $student->name }}</td>
     <td>
       <a href="/students/{{ $student->id }}"
@@ -26,8 +29,6 @@
           color:black;
           background:white;">
     詳細表示
-</a>
-
 </a>
 
     </td>
@@ -43,9 +44,9 @@
 
 
 <script>
-$(function () {
+  $(function () {
 
-  let currentSort = ''; // '', 'asc', 'desc'
+  let currentSort = ''; 
 
   function fetchStudents(sort) {
     if (sort !== undefined) {
@@ -57,6 +58,7 @@ $(function () {
       type: 'GET',
       data: {
         sort: currentSort,
+        sort_by: 'grade', 
         name: $('#name').val(),
         grade: $('#grade').val()
       },
@@ -65,20 +67,22 @@ $(function () {
     .done(function (data) {
       let html = '';
 
-      data.forEach(function (s) {
-        html += `
-          <tr>
-            <td>${s.id}</td>
-            <td>${s.student_number ?? ''}</td>
-            <td>${s.name}</td>
-            <td>${s.grade}</td>
-            <td>
-              <a href="/students/${s.id}">詳細</a>
-              <a href="/students/${s.id}/edit">編集</a>
-            </td>
-          </tr>
-        `;
-      });
+      if (data.length === 0) {
+        html = '<tr><td colspan="3">該当する学生がいません。</td></tr>';
+      } else {
+
+        data.forEach(function (s) {
+          html += `
+            <tr>
+              <td>${s.grade}年</td>
+              <td>${s.name}</td>
+              <td>
+                <a href="/students/${s.id}">詳細表示</a>
+              </td>
+            </tr>
+          `;
+        });
+      }
 
       $('#student-list').html(html);
     })
@@ -87,18 +91,17 @@ $(function () {
     });
   }
 
-  
-  $('#sort-asc').on('click', function () {
+  $('#sort-grade-asc').on('click', function () {
     fetchStudents('asc');
   });
 
-  $('#sort-desc').on('click', function () {
+  $('#sort-grade-desc').on('click', function () {
     fetchStudents('desc');
   });
 
   
   $('#name').on('keyup', function () {
-    fetchStudents(); 
+    fetchStudents();
   });
 
   $('#grade').on('change', function () {
@@ -116,14 +119,18 @@ $(function () {
     <input type="text" name="name" id="name" placeholder="学生名で検索"
            value="{{ request('name') }}" class="form-control">
 
-   <select name="grade" id="grade" class="form-select">
-    <option value="" disabled {{ request('grade') ? '' : 'selected' }}>学年を選択</option>
-    @foreach ($grades as $g)
-        <option value="{{ $g->id }}" {{ (string)request('grade') === (string)$g->id ? 'selected' : '' }}>
-            {{ !empty($g->name) ? $g->name : $g->id . '年' }}
-        </option>
-    @endforeach
-   </select>
+     <p>
+      学年：<br>
+       <select name="grade" id="grade">
+       <option value="">選択してください</option>
+       @for ($i = 1; $i <= 6; $i++)
+       <option value="{{ $i }}">{{ $i }}年</option>
+       @endfor
+       </select>
+    </p>
+
+
+  
     
 
    

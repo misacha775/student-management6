@@ -11,26 +11,37 @@ use App\GradeMaster;
 
 class IndexController extends Controller
 {
-    public function __invoke(Request $request)
-    {
-        $query = Student::query();
+   public function __invoke(Request $request)
+{
+    $query = Student::query();
 
-        if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
-
-        if ($request->filled('grade')) {
-            $query->where('grade', $request->grade);
-        }
-
-        $students = $query->with('schoolGrades')->orderBy('id', 'desc')->paginate(10);
-
-        $grades = GradeMaster::orderBy('id')->get();
-
-
-        return view('students.index', [
-            'students' => $students,
-            'grades'   => $grades,
-        ]);
+    if ($request->filled('name')) {
+        $query->where('name', 'like', '%' . $request->name . '%');
     }
+
+    if ($request->filled('grade')) {
+        $query->where('grade', $request->grade);
+    }
+
+    $sort = $request->input('sort');
+    $sortBy = $request->input('sort_by', 'id');
+
+    if ($sort) {
+        $query->orderBy($sortBy, $sort);
+    } else {
+       
+        $query->orderBy('id', 'desc');
+    }
+
+    $students = $query
+        ->with('schoolGrades')
+        ->paginate(10);
+
+    $grades = GradeMaster::orderBy('id')->get();
+
+    return view('students.index', [
+        'students' => $students,
+        'grades'   => $grades,
+    ]);
+}
 }

@@ -29,6 +29,7 @@
 <h2>成績表示</h2>
 
 
+
 <p>
   学年：
   <select id="filter-grade">
@@ -76,8 +77,6 @@
 @if ($grades->isEmpty())
   <p>成績はまだありません。</p>
 @else
-
-
 
 
   <ul id="grade-list">
